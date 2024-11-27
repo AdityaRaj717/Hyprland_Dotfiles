@@ -131,6 +131,32 @@ return {
 			vim.keymap.set("n", "<leader>ff", ":Telescope find_files<CR>", { desc = "[T]elescope Find Files" }),
 			vim.keymap.set("n", "<leader>fg", ":Telescope live_grep<CR>", { desc = "[T]elescope Live Grep" }),
 			vim.keymap.set("n", "<leader>fb", ":Telescope buffers<CR>", { desc = "[T]elescope Buffers" }),
+			vim.keymap.set(
+				"n",
+				"<S-h>",
+				"<cmd>Telescope buffers sort_mru=true sort_lastused=true initial_mode=normal theme=ivy<cr>",
+				{ desc = "[T]elescope buffers" }
+			),
+			vim.keymap.set("n", "<leader>cl", "<cmd>Telescope neoclip <cr>", { desc = "[O]pen telescope neoclip" }),
+			vim.keymap.set(
+				"n",
+				"<leader>fd",
+				require("telescope.builtin").diagnostics,
+				{ desc = "[T]elescope Diagnostics" }
+			),
+			vim.keymap.set(
+				"n",
+				"<leader>fs",
+				require("telescope.builtin").lsp_document_symbols,
+				{ desc = "[T]elescope Document Symbols" }
+			),
+			vim.keymap.set("n", "<leader>/", function()
+				-- You can pass additional configuration to Telescope to change the theme, layout, etc.
+				require("telescope.builtin").current_buffer_fuzzy_find(require("telescope.themes").get_dropdown({
+					winblend = 10,
+					previewer = false,
+				}))
+			end, { desc = "[/] Fuzzily search in current buffer" }),
 		},
 	},
 
@@ -145,8 +171,6 @@ return {
 					},
 				},
 			})
-			-- To get ui-select loaded and working with telescope, you need to call
-			-- load_extension, somewhere after setup function:
 			require("telescope").load_extension("ui-select")
 		end,
 	},
